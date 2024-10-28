@@ -8,10 +8,10 @@ This project aims to efficiently optimize the parameters of transcutaneous elect
 
 ## Features
 
-* **Support for Multiple Body Part** This system supports optimizatation of TENS in the lower limb, upper limb, head.
-* **Advanced Optimization Settings** This system supports not only current density maximization for single target domain but also conditional optimization concerning current densities in other domains. In this mode, detailed constraint parameters can be configured.
-* **Intuitive and Lightweight UI** This system was implemented using VisPy and PyQt5. The UI operates efficiently by leveraging GPU resources for rendering processes.
-* **Detailed Accessemnt** Detailed results can be accessed through logs.
+* **Support for Multiple Body Part:** This system supports optimizatation of TENS in the lower limb, upper limb, head.
+* **Advanced Optimization Settings:** This system supports not only current density maximization for single target domain but also conditional optimization concerning current densities in other domains. In this mode, detailed constraint parameters can be configured.
+* **Intuitive and Lightweight UI:** This system was implemented using VisPy and PyQt5. The UI operates efficiently by leveraging GPU resources for rendering processes.
+* **Detailed Accessemnt:** Detailed results can be accessed through logs.
 
 ## Requirement
 

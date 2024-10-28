@@ -15,11 +15,10 @@
         ```bash
         git clone https://github.com/t-ota0407/electrode-placement-optimization.git
         ```
-    2. Activate the environment:
+    1. Activate the environment:
         ```bash
         conda activate ElecOptim
         ```
-    3. hogehoge
 
 ### Project Structure
 The directory structure of the project is outlined below.
@@ -40,15 +39,15 @@ electrode-placement-optimization/
 
 ```
 
-* **images/** 
-* **model_data_cache/**
-* **src/**
-* **main.py**
-* **config.py**
+* **images/** contains all the images used by the client application.
+* **model_data_cache/** contains all the static point cloud data used by the client application.
+* **src/** contains the python code for the client application.
+* **main.py** is the entry point of the client application.
+* **config.py** is the setting file of the client application.
 
 ### Guidelines
 
-##### Multilingual support
+#### Multilingual support
 This project supports both English and Japanese using QTranslator from PyQt5. The translation definition files (.ts) are located under src/translations/. When updates are made to the translation definition files, running the following command will generate the .qm files from the updated definitions.
 ```bash
 lrelease src/translations/ja.ts && lrelease src/translations/en.ts
