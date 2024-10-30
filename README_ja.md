@@ -81,7 +81,9 @@ conda activate elecOptim
 ## リポジトリのコントリビューター
 
 * Takashi Ota, The University of Tokyo, ota [at] cyber.t.u-tokyo.ac.jp  
-本研究の再現性確認のために必要な情報があればメールでお問い合わせください
+* Kazuma Aoyama, The University of Tokyo (aoyama [at] vr.t.u-tokyo.ac.jp), Gunma University (aoyama [at] gunma-u.ac.jp)  
+
+本研究の再現性確認のために必要なデータがあればメールでお問い合わせください
 
 ## ライセンス
 

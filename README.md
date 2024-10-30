@@ -31,7 +31,7 @@ conda activate elecOptim
 
 ## Data Preparation
 ### When Using the Cache
-1. You need to prepare the cache data. Please contact the specified contact person mentioned later to request the use of the cache data.
+1. You need to prepare the cache data. Please contact the contributors mentioned later to request the use of the cache data.
 
 ### When Not Using the Cache
 1. You need to prepare the FEM solver. Please set up [COMSOL Multiphysics &reg;](https://www.comsol.jp/comsol-multiphysics) and [COMSOL LiveLink for MATLAB &reg;](https://www.comsol.jp/livelink-for-matlab).
@@ -78,7 +78,9 @@ conda activate elecOptim
 
 ## Contributors
 
-* Takashi Ota, The University of Tokyo, ota [at] cyber.t.u-tokyo.ac.jp  
+* Takashi Ota, The University of Tokyo (ota [at] cyber.t.u-tokyo.ac.jp)
+* Kazuma Aoyama, The University of Tokyo (aoyama [at] vr.t.u-tokyo.ac.jp), Gunma University (aoyama [at] gunma-u.ac.jp)
+
 If you need any information to confirm the reproducibility of this research, please contact us by email.
 
 ## License
