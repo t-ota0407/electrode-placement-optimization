@@ -43,6 +43,18 @@ class MainWindow(QMainWindow):
         self.main_widget = MainWidget(self.tcpip_communication)
         self.setCentralWidget(self.main_widget)
 
+        if config.USE_CACHE:
+            lower_limb_solutions_csv_path = Path(config.LOWER_LIMB_CACHE_DIR_PATH, 'solutions.csv')
+            upper_limb_solutions_csv_path = Path(config.UPPER_LIMB_CACHE_DIR_PATH, 'solutions.csv')
+            head_solutions_csv_path = Path(config.HEAD_CACHE_DIR_PATH, 'solutions.csv')
+            if not lower_limb_solutions_csv_path.exists():
+                self.main_widget.log_console.log(f"Error: The cache setting is activated, but the solutions.csv file was not found in {config.LOWER_LIMB_CACHE_DIR_PATH}", is_error=True)
+            if not upper_limb_solutions_csv_path.exists():
+                self.main_widget.log_console.log(f"Error: The cache setting is activated, but the solutions.csv file was not found in {config.UPPER_LIMB_CACHE_DIR_PATH}", is_error=True)
+            if not head_solutions_csv_path.exists():
+                self.main_widget.log_console.log(f"Error: The cache setting is activated, but the solutions.csv file was not found in {config.HEAD_CACHE_DIR_PATH}", is_error=True)
+            
+
         self.menu_bar = self.menuBar()
 
         self.file_menu = self.menu_bar.addMenu(self.tr('File'))
