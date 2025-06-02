@@ -1,8 +1,9 @@
 from typing import List
 from PyQt5.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QComboBox, QLabel,
-    QPushButton, QScrollArea, QVBoxLayout, QLineEdit
+    QPushButton, QScrollArea, QVBoxLayout, QLineEdit, QSlider
 )
+from PyQt5.QtCore import Qt
 
 import fonts as fonts
 from custom_types.optimization_mode import OptimizationMode
@@ -25,49 +26,54 @@ class ConfigArea(QWidget):
 
         self.mode1view = Mode1View(selectable_domain_descriptions)
         self.mode2view = Mode2View(selectable_domain_descriptions)
+        self.mode3view = Mode3View(selectable_domain_descriptions)
         self.mode2view.add_condition()
 
         self.main_layout.addWidget(self.mode1view)
         self.main_layout.addWidget(self.mode2view)
+        self.main_layout.addWidget(self.mode3view)
 
         self.setLayout(self.main_layout)
 
         self.update_view(self.current_optimization_mode)
 
     def update_view(self, optimization_mode: OptimizationMode):
-
         self.current_optimization_mode = optimization_mode
         
         self.mode1view.hide()
         self.mode2view.hide()
+        self.mode3view.hide()
 
         if (optimization_mode == OptimizationMode.SIMPLE_OPTIMIZATION):
             self.mode1view.show()
-        
-        if (optimization_mode == OptimizationMode.CONDITIONED_OPTIMIZATION):
+        elif (optimization_mode == OptimizationMode.CONDITIONED_OPTIMIZATION):
             self.mode2view.show()
+        elif (optimization_mode == OptimizationMode.COMBINED_STIMULATION):
+            self.mode3view.show()
     
     def update_selectable_domain_descriptions(self, selectable_domain_descriptions):
         self.mode1view.update_selectable_domain_descriptions(selectable_domain_descriptions)
         self.mode2view.update_selectable_domain_descriptions(selectable_domain_descriptions)
+        self.mode3view.update_selectable_domain_descriptions(selectable_domain_descriptions)
     
     def get_optimization_condition(self):
-        print(self.current_optimization_mode)
-        
         if self.current_optimization_mode == OptimizationMode.SIMPLE_OPTIMIZATION:
             optimization_condition = OptimizationCondition(self.current_optimization_mode,
                                                            self.mode1view.get_target_domain())
-
         elif self.current_optimization_mode == OptimizationMode.CONDITIONED_OPTIMIZATION:
             optimization_condition = OptimizationCondition(self.current_optimization_mode,
                                                            self.mode2view.get_target_domain(),
                                                            self.mode2view.get_constraints())
-        print(optimization_condition)
+        elif self.current_optimization_mode == OptimizationMode.COMBINED_STIMULATION:
+            optimization_condition = OptimizationCondition(self.current_optimization_mode,
+                                                           self.mode3view.get_primary_domain(),
+                                                           [(self.mode3.get_secondary_domain(), self.mode3.get_ratio())])
         return optimization_condition
     
     def retranslateUI(self):
         self.mode1view.retranslateUI()
         self.mode2view.retranslateUI()
+        self.mode3view.retranslateUI()
 
 
 class Mode1View(QWidget):
@@ -194,6 +200,121 @@ class Mode2View(QWidget):
         self.condition_add_button.setText(self.tr('Add constraints'))
         for condition in self._get_all_conditions():
             condition.update_selectable_domain_descriptions(self.selectable_domain_descriptions)
+
+class Mode3View(QWidget):
+    def __init__(self, selectable_domain_descriptions):
+        super().__init__()
+
+        self.selectable_domain_descriptions = selectable_domain_descriptions
+
+        self.layout = QVBoxLayout()
+        self.setLayout(self.layout)
+
+        # Primary target domain
+        primary_domain_layout = QVBoxLayout()
+        self.layout.addLayout(primary_domain_layout)
+
+        primary_header_layout = QHBoxLayout()
+        primary_domain_layout.addLayout(primary_header_layout)
+
+        self.primary_domain_label = QLabel(self.tr('Primary Target Domain'))
+        self.primary_domain_label.setFont(fonts.plain_font)
+        primary_header_layout.addWidget(self.primary_domain_label)
+
+        self.primary_domain_combo_box = QComboBox()
+        self.primary_domain_combo_box.setFont(fonts.plain_font)
+        self.primary_domain_combo_box.addItems(selectable_domain_descriptions)
+        primary_header_layout.addWidget(self.primary_domain_combo_box)
+
+        primary_constraint_layout = QHBoxLayout()
+        primary_domain_layout.addLayout(primary_constraint_layout)
+
+        self.primary_constraint_label = QLabel(self.tr('Constraint:'))
+        self.primary_constraint_label.setFont(fonts.plain_font)
+        primary_constraint_layout.addWidget(self.primary_constraint_label)
+
+        self.primary_constraint_input = QLineEdit()
+        self.primary_constraint_input.setFont(fonts.plain_font)
+        self.primary_constraint_input.setPlaceholderText(self.tr('Enter numeric value'))
+        primary_constraint_layout.addWidget(self.primary_constraint_input)
+
+        # Secondary target domain
+        secondary_domain_layout = QVBoxLayout()
+        self.layout.addLayout(secondary_domain_layout)
+
+        secondary_header_layout = QHBoxLayout()
+        secondary_domain_layout.addLayout(secondary_header_layout)
+
+        self.secondary_domain_label = QLabel(self.tr('Secondary Target Domain'))
+        self.secondary_domain_label.setFont(fonts.plain_font)
+        secondary_header_layout.addWidget(self.secondary_domain_label)
+
+        self.secondary_domain_combo_box = QComboBox()
+        self.secondary_domain_combo_box.setFont(fonts.plain_font)
+        self.secondary_domain_combo_box.addItems(selectable_domain_descriptions)
+        secondary_header_layout.addWidget(self.secondary_domain_combo_box)
+
+        secondary_constraint_layout = QHBoxLayout()
+        secondary_domain_layout.addLayout(secondary_constraint_layout)
+
+        self.secondary_constraint_label = QLabel(self.tr('Constraint:'))
+        self.secondary_constraint_label.setFont(fonts.plain_font)
+        secondary_constraint_layout.addWidget(self.secondary_constraint_label)
+
+        self.secondary_constraint_input = QLineEdit()
+        self.secondary_constraint_input.setFont(fonts.plain_font)
+        self.secondary_constraint_input.setPlaceholderText(self.tr('Enter numeric value'))
+        secondary_constraint_layout.addWidget(self.secondary_constraint_input)
+
+        # Objective Function
+        objective_layout = QVBoxLayout()
+        self.layout.addLayout(objective_layout)
+
+        self.objective_label = QLabel(self.tr('Objective Function'))
+        self.objective_label.setFont(fonts.plain_font)
+        objective_layout.addWidget(self.objective_label)
+
+        self.objective_input = QLineEdit()
+        self.objective_input.setFont(fonts.plain_font)
+        self.objective_input.setPlaceholderText(self.tr('Enter objective function'))
+        objective_layout.addWidget(self.objective_input)
+
+    def update_selectable_domain_descriptions(self, selectable_domain_descriptions):
+        self.primary_domain_combo_box.clear()
+        self.primary_domain_combo_box.addItems(selectable_domain_descriptions)
+        self.secondary_domain_combo_box.clear()
+        self.secondary_domain_combo_box.addItems(selectable_domain_descriptions)
+
+    def get_primary_domain(self):
+        return DomainType.from_description(self.primary_domain_combo_box.currentText())
+
+    def get_secondary_domain(self):
+        return DomainType.from_description(self.secondary_domain_combo_box.currentText())
+
+    def get_primary_constraint(self):
+        try:
+            return float(self.primary_constraint_input.text())
+        except ValueError:
+            raise ValidationError('Please enter a numeric value for the primary domain constraint.')
+
+    def get_secondary_constraint(self):
+        try:
+            return float(self.secondary_constraint_input.text())
+        except ValueError:
+            raise ValidationError('Please enter a numeric value for the secondary domain constraint.')
+
+    def get_objective_function(self):
+        return self.objective_input.text()
+
+    def retranslateUI(self):
+        self.primary_domain_label.setText(self.tr('Primary Target Domain'))
+        self.primary_constraint_label.setText(self.tr('Constraint:'))
+        self.secondary_domain_label.setText(self.tr('Secondary Target Domain'))
+        self.secondary_constraint_label.setText(self.tr('Constraint:'))
+        self.objective_label.setText(self.tr('Objective Function'))
+        self.primary_constraint_input.setPlaceholderText(self.tr('Enter numeric value'))
+        self.secondary_constraint_input.setPlaceholderText(self.tr('Enter numeric value'))
+        self.objective_input.setPlaceholderText(self.tr('Enter objective function'))
 
 class Condition(QWidget):
 

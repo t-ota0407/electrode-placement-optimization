@@ -39,6 +39,11 @@
         <source>Language</source>
         <translation type="unfinished">Language</translation>
     </message>
+    <message>
+        <location filename="../main.py"/>
+        <source>Optimization for combined stimulation</source>
+        <translation type="unfinished">Optimization for combined stimulation</translation>
+    </message>
 </context>
 
 <context>
@@ -561,8 +566,7 @@
         <source>Bone</source>
         <translation type="unfinished">Bone</translation>
     </message>
-    </message>
-        <message>
+    <message>
         <location filename="../widgets/config_area.py"/>
         <source>Vessel</source>
         <translation type="unfinished">Vessel</translation>
@@ -721,6 +725,25 @@
         <location filename="../widgets/log_console.py"/>
         <source>Message</source>
         <translation type="unfinished">Message</translation>
+    </message>
+</context>
+
+<context>
+    <name>ConfigArea</name>
+    <message>
+        <location filename="../widgets/config_area.py"/>
+        <source>Primary Target Domain</source>
+        <translation type="unfinished">Primary Target Domain</translation>
+    </message>
+    <message>
+        <location filename="../widgets/config_area.py"/>
+        <source>Secondary Target Domain</source>
+        <translation type="unfinished">Secondary Target Domain</translation>
+    </message>
+    <message>
+        <location filename="../widgets/config_area.py"/>
+        <source>Stimulation Ratio (Primary:Secondary)</source>
+        <translation type="unfinished">Stimulation Ratio (Primary:Secondary)</translation>
     </message>
 </context>
 

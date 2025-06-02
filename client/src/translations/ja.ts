@@ -724,4 +724,40 @@
     </message>
 </context>
 
+<context>
+    <name>OptimizationForCombinedStimulation</name>
+    <message>
+        <location filename="../main.py"/>
+        <source>Optimization for combined stimulation</source>
+        <translation type="unfinished">複合刺激のための最適化</translation>
+    </message>
+</context>
+
+<context>
+    <name>PrimaryTargetDomain</name>
+    <message>
+        <location filename="../widgets/config_area.py"/>
+        <source>Primary Target Domain</source>
+        <translation type="unfinished">主要ターゲットドメイン</translation>
+    </message>
+</context>
+
+<context>
+    <name>SecondaryTargetDomain</name>
+    <message>
+        <location filename="../widgets/config_area.py"/>
+        <source>Secondary Target Domain</source>
+        <translation type="unfinished">副次ターゲットドメイン</translation>
+    </message>
+</context>
+
+<context>
+    <name>StimulationRatio</name>
+    <message>
+        <location filename="../widgets/config_area.py"/>
+        <source>Stimulation Ratio (Primary:Secondary)</source>
+        <translation type="unfinished">刺激比率（主要：副次）</translation>
+    </message>
+</context>
+
 </TS>
