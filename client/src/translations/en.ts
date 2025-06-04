@@ -56,12 +56,17 @@
     <message>
         <location filename="../main.py"/>
         <source>Optimization of a target domain</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Optimization of a target domain</translation>
     </message>
     <message>
         <location filename="../main.py"/>
         <source>Conditioned optimization of a target domain</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Conditioned optimization of a target domain</translation>
+    </message>
+    <message>
+        <location filename="../main.py"/>
+        <source>Optimization for combined stimulation</source>
+        <translation type="unfinished">Optimization for combined stimulation</translation>
     </message>
     <message>
         <location filename="../main.py"/>
@@ -561,8 +566,7 @@
         <source>Bone</source>
         <translation type="unfinished">Bone</translation>
     </message>
-    </message>
-        <message>
+    <message>
         <location filename="../widgets/config_area.py"/>
         <source>Vessel</source>
         <translation type="unfinished">Vessel</translation>
@@ -721,6 +725,25 @@
         <location filename="../widgets/log_console.py"/>
         <source>Message</source>
         <translation type="unfinished">Message</translation>
+    </message>
+</context>
+
+<context>
+    <name>Mode3View</name>
+    <message>
+        <location filename="../widgets/config_area.py"/>
+        <source>Primary Target Domain</source>
+        <translation type="unfinished">Primary Target Domain</translation>
+    </message>
+    <message>
+        <location filename="../widgets/config_area.py"/>
+        <source>Secondary Target Domain</source>
+        <translation type="unfinished">Secondary Target Domain</translation>
+    </message>
+    <message>
+        <location filename="../widgets/config_area.py"/>
+        <source>Objective Function</source>
+        <translation type="unfinished">Objective Function</translation>
     </message>
 </context>
 

@@ -10,12 +10,14 @@ class OptimizationMode(Enum):
 
     SIMPLE_OPTIMIZATION = 1
     CONDITIONED_OPTIMIZATION = 2
+    COMBINED_STIMULATION_OPTIMIZATION = 3
 
     @staticmethod
     def _definition() -> pd.DataFrame:
         return pd.DataFrame([
             [OptimizationMode.SIMPLE_OPTIMIZATION, 'SIMPLE_OPTIMIZATION', 'Optimization of a target domain', 1],
-            [OptimizationMode.CONDITIONED_OPTIMIZATION, 'CONDITIONED_OPTIMIZATION', 'Conditioned optimization of a target domain', 2]
+            [OptimizationMode.CONDITIONED_OPTIMIZATION, 'CONDITIONED_OPTIMIZATION', 'Conditioned optimization of a target domain', 2],
+            [OptimizationMode.COMBINED_STIMULATION_OPTIMIZATION, 'COMBINED_STIMULATION_OPTIMIZATION', 'Optimization for combined stimulation', 3]
         ], columns=[STR_OPTIMIZATION_MODE, STR_STRING_EXPRESSION, STR_DESCRIPTION, STR_IDENTICAL_NUMBER])
     
     @staticmethod

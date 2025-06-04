@@ -25,49 +25,64 @@ class ConfigArea(QWidget):
 
         self.mode1view = Mode1View(selectable_domain_descriptions)
         self.mode2view = Mode2View(selectable_domain_descriptions)
+        self.mode3view = Mode3View(selectable_domain_descriptions)
         self.mode2view.add_condition()
 
         self.main_layout.addWidget(self.mode1view)
         self.main_layout.addWidget(self.mode2view)
+        self.main_layout.addWidget(self.mode3view)
 
         self.setLayout(self.main_layout)
 
         self.update_view(self.current_optimization_mode)
 
     def update_view(self, optimization_mode: OptimizationMode):
-
         self.current_optimization_mode = optimization_mode
         
         self.mode1view.hide()
         self.mode2view.hide()
+        self.mode3view.hide()
 
         if (optimization_mode == OptimizationMode.SIMPLE_OPTIMIZATION):
             self.mode1view.show()
-        
-        if (optimization_mode == OptimizationMode.CONDITIONED_OPTIMIZATION):
+        elif (optimization_mode == OptimizationMode.CONDITIONED_OPTIMIZATION):
             self.mode2view.show()
+        elif (optimization_mode == OptimizationMode.COMBINED_STIMULATION_OPTIMIZATION):
+            self.mode3view.show()
     
     def update_selectable_domain_descriptions(self, selectable_domain_descriptions):
         self.mode1view.update_selectable_domain_descriptions(selectable_domain_descriptions)
         self.mode2view.update_selectable_domain_descriptions(selectable_domain_descriptions)
+        self.mode3view.update_selectable_domain_descriptions(selectable_domain_descriptions)
     
     def get_optimization_condition(self):
-        print(self.current_optimization_mode)
-        
         if self.current_optimization_mode == OptimizationMode.SIMPLE_OPTIMIZATION:
-            optimization_condition = OptimizationCondition(self.current_optimization_mode,
-                                                           self.mode1view.get_target_domain())
-
+            optimization_condition = OptimizationCondition(
+                self.current_optimization_mode,
+                self.mode1view.get_target_domain()
+            )
         elif self.current_optimization_mode == OptimizationMode.CONDITIONED_OPTIMIZATION:
-            optimization_condition = OptimizationCondition(self.current_optimization_mode,
-                                                           self.mode2view.get_target_domain(),
-                                                           self.mode2view.get_constraints())
-        print(optimization_condition)
+            optimization_condition = OptimizationCondition(
+                self.current_optimization_mode,
+                self.mode2view.get_target_domain(),
+                self.mode2view.get_constraints()
+            )
+        elif self.current_optimization_mode == OptimizationMode.COMBINED_STIMULATION_OPTIMIZATION:
+            optimization_condition = OptimizationCondition(
+                self.current_optimization_mode,
+                self.mode3view.get_primary_target_domain(),
+                None,
+                self.mode3view.get_secondary_target_domain(),
+                self.mode3view.get_objective_function(),
+                self.mode3view.get_primary_constraint(),
+                self.mode3view.get_secondary_constraint()
+            )
         return optimization_condition
     
     def retranslateUI(self):
         self.mode1view.retranslateUI()
         self.mode2view.retranslateUI()
+        self.mode3view.retranslateUI()
 
 
 class Mode1View(QWidget):
@@ -194,6 +209,130 @@ class Mode2View(QWidget):
         self.condition_add_button.setText(self.tr('Add constraints'))
         for condition in self._get_all_conditions():
             condition.update_selectable_domain_descriptions(self.selectable_domain_descriptions)
+
+class Mode3View(QWidget):
+    current_selectable_domain_descriptions = []
+    
+    def __init__(self, selectable_domain_descriptions):
+        super().__init__()
+
+        self.current_selectable_domain_descriptions = selectable_domain_descriptions
+
+        self.layout = QVBoxLayout()
+
+        # Primary target domain
+        primary_layout = QHBoxLayout()
+        self.layout.addLayout(primary_layout)
+
+        primary_domain_layout = QVBoxLayout()
+        primary_layout.addLayout(primary_domain_layout)
+
+        self.primary_target_label = QLabel(self.tr('Primary Target Domain'))
+        self.primary_target_label.setFont(fonts.plain_font)
+        primary_domain_layout.addWidget(self.primary_target_label)
+
+        self.primary_combo_box = QComboBox(self)
+        for description in selectable_domain_descriptions:
+            self.primary_combo_box.addItem(self.tr(description))
+        self.primary_combo_box.setFont(fonts.plain_font)
+        primary_domain_layout.addWidget(self.primary_combo_box)
+
+        primary_constraint_layout = QVBoxLayout()
+        primary_layout.addLayout(primary_constraint_layout)
+
+        self.primary_constraint_label = QLabel(self.tr('Constraint'))
+        self.primary_constraint_label.setFont(fonts.plain_font)
+        primary_constraint_layout.addWidget(self.primary_constraint_label)
+
+        self.primary_constraint_input = QLineEdit(self)
+        self.primary_constraint_input.setFont(fonts.plain_font)
+        self.primary_constraint_input.setPlaceholderText("Enter constraint value...")
+        primary_constraint_layout.addWidget(self.primary_constraint_input)
+
+        # Secondary target domain
+        secondary_layout = QHBoxLayout()
+        self.layout.addLayout(secondary_layout)
+
+        secondary_domain_layout = QVBoxLayout()
+        secondary_layout.addLayout(secondary_domain_layout)
+
+        self.secondary_target_label = QLabel(self.tr('Secondary Target Domain'))
+        self.secondary_target_label.setFont(fonts.plain_font)
+        secondary_domain_layout.addWidget(self.secondary_target_label)
+
+        self.secondary_combo_box = QComboBox(self)
+        for description in selectable_domain_descriptions:
+            self.secondary_combo_box.addItem(self.tr(description))
+        self.secondary_combo_box.setFont(fonts.plain_font)
+        secondary_domain_layout.addWidget(self.secondary_combo_box)
+
+        secondary_constraint_layout = QVBoxLayout()
+        secondary_layout.addLayout(secondary_constraint_layout)
+
+        self.secondary_constraint_label = QLabel(self.tr('Constraint'))
+        self.secondary_constraint_label.setFont(fonts.plain_font)
+        secondary_constraint_layout.addWidget(self.secondary_constraint_label)
+
+        self.secondary_constraint_input = QLineEdit(self)
+        self.secondary_constraint_input.setFont(fonts.plain_font)
+        self.secondary_constraint_input.setPlaceholderText("Enter constraint value...")
+        secondary_constraint_layout.addWidget(self.secondary_constraint_input)
+
+        # Objective function
+        objective_layout = QHBoxLayout()
+        self.layout.addLayout(objective_layout)
+
+        self.objective_label = QLabel(self.tr('Objective Function'))
+        self.objective_label.setFont(fonts.plain_font)
+        objective_layout.addWidget(self.objective_label)
+
+        self.objective_input = QLineEdit(self)
+        self.objective_input.setFont(fonts.plain_font)
+        self.objective_input.setPlaceholderText("Enter objective function...")
+        objective_layout.addWidget(self.objective_input)
+
+        self.setLayout(self.layout)
+    
+    def update_selectable_domain_descriptions(self, selectable_domain_descriptions):
+        self.current_selectable_domain_descriptions = selectable_domain_descriptions
+        self.primary_combo_box.clear()
+        self.secondary_combo_box.clear()
+        for description in selectable_domain_descriptions:
+            self.primary_combo_box.addItem(self.tr(description))
+            self.secondary_combo_box.addItem(self.tr(description))
+    
+    def get_primary_target_domain(self):
+        return DomainType.from_description(self.primary_combo_box.currentText())
+    
+    def get_secondary_target_domain(self):
+        return DomainType.from_description(self.secondary_combo_box.currentText())
+    
+    def get_objective_function(self):
+        return self.objective_input.text()
+    
+    def get_primary_constraint(self):
+        try:
+            return float(self.primary_constraint_input.text())
+        except ValueError:
+            return None
+    
+    def get_secondary_constraint(self):
+        try:
+            return float(self.secondary_constraint_input.text())
+        except ValueError:
+            return None
+    
+    def retranslateUI(self):
+        self.primary_target_label.setText(self.tr('Primary Target Domain'))
+        self.primary_constraint_label.setText(self.tr('Constraint'))
+        self.secondary_target_label.setText(self.tr('Secondary Target Domain'))
+        self.secondary_constraint_label.setText(self.tr('Constraint'))
+        self.objective_label.setText(self.tr('Objective Function'))
+        self.primary_combo_box.clear()
+        self.secondary_combo_box.clear()
+        for description in self.current_selectable_domain_descriptions:
+            self.primary_combo_box.addItem(self.tr(description))
+            self.secondary_combo_box.addItem(self.tr(description))
 
 class Condition(QWidget):
 

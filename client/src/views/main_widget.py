@@ -66,7 +66,9 @@ class MainWidget(QWidget):
 
         optimization_mode_radio_layout = QVBoxLayout()
         self.optimization_mode_radio_group = QButtonGroup(self)
-        for optimization_mode in [OptimizationMode.SIMPLE_OPTIMIZATION, OptimizationMode.CONDITIONED_OPTIMIZATION]:
+        for optimization_mode in [OptimizationMode.SIMPLE_OPTIMIZATION, 
+                                OptimizationMode.CONDITIONED_OPTIMIZATION,
+                                OptimizationMode.COMBINED_STIMULATION_OPTIMIZATION]:
             radio_button = QRadioButton(self.tr(OptimizationMode.to_description(optimization_mode)))
             radio_button.setFont(fonts.plain_font)
             radio_button.toggled.connect(partial(self.update_optimization_mode, optimization_mode))

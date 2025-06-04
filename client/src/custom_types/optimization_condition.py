@@ -9,3 +9,7 @@ class OptimizationCondition:
     optimization_mode: OptimizationMode
     target_domain: DomainType
     constraints: Optional[List[Tuple[DomainType, float]]] = None
+    secondary_target_domain: Optional[DomainType] = None
+    objective_function: Optional[str] = None
+    primary_constraint: Optional[float] = None
+    secondary_constraint: Optional[float] = None

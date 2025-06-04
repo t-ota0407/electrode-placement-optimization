@@ -53,7 +53,7 @@
         <source>Optimization mode</source>
         <translation type="unfinished">最適化手法</translation>
     </message>
-        <message>
+    <message>
         <location filename="../main.py"/>
         <source>Optimization of a target domain</source>
         <translation type="unfinished">単一組織の電流密度最大化</translation>
@@ -62,6 +62,11 @@
         <location filename="../main.py"/>
         <source>Conditioned optimization of a target domain</source>
         <translation type="unfinished">他の組織の電流密度が一定以下の条件付きで単一組織の電流密度最大化</translation>
+    </message>
+    <message>
+        <location filename="../main.py"/>
+        <source>Optimization for combined stimulation</source>
+        <translation type="unfinished">複数組織の同時刺激のための最適化</translation>
     </message>
     <message>
         <location filename="../main.py"/>
@@ -562,7 +567,7 @@
         <source>Bone</source>
         <translation type="unfinished">骨</translation>
     </message>
-        <message>
+    <message>
         <location filename="../widgets/config_area.py"/>
         <source>Vessel</source>
         <translation type="unfinished">血管</translation>
@@ -721,6 +726,25 @@
         <location filename="../widgets/log_console.py"/>
         <source>Message</source>
         <translation type="unfinished">メッセージ</translation>
+    </message>
+</context>
+
+<context>
+    <name>Mode3View</name>
+    <message>
+        <location filename="../widgets/config_area.py"/>
+        <source>Primary Target Domain</source>
+        <translation type="unfinished">第一ターゲットドメイン</translation>
+    </message>
+    <message>
+        <location filename="../widgets/config_area.py"/>
+        <source>Secondary Target Domain</source>
+        <translation type="unfinished">第二ターゲットドメイン</translation>
+    </message>
+    <message>
+        <location filename="../widgets/config_area.py"/>
+        <source>Objective Function</source>
+        <translation type="unfinished">目的関数</translation>
     </message>
 </context>
 
